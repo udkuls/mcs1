@@ -15,23 +15,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/order-numbers")
 @Tag(name = "Order Number Management", description = "Endpoints for managing order numbers")
 public class OrderNumberController {
-
     private final OrderNumberService orderNumberService;
 
     @Autowired
     public OrderNumberController(OrderNumberService orderNumberService) {
         this.orderNumberService = orderNumberService;
     }
+
     @Operation(summary = "Generates a new order number")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "The order number has been successfully generated",
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = OrderNumberDto.class)))
     })
-    @GetMapping("/order-numbers")
+
+    @GetMapping
     private ResponseEntity<OrderNumberDto> getOrderNumber(){
         return ResponseEntity.ok(orderNumberService.generateOrderNumber());
     }
